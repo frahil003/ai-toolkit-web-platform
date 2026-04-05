@@ -1,25 +1,8 @@
 from fastapi.testclient import TestClient
 
-from app.api.dependencies import get_sentiment_service
 from app.main import app
-from app.schemas.sentiment import (
-    SentimentAnalysisRequest,
-    SentimentAnalysisResponse,
-)
 
 client = TestClient(app)
-
-
-class FakeSentimentService:
-    def analyze(
-        self,
-        request: SentimentAnalysisRequest,
-    ) -> SentimentAnalysisResponse:
-        return SentimentAnalysisResponse(label="positive", score=0.99)
-
-
-def override_sentiment_service() -> FakeSentimentService:
-    return FakeSentimentService()
 
 
 def test_analyze_sentiment_positive() -> None:
@@ -86,21 +69,3 @@ def test_analyze_sentiment_rejects_missing_text() -> None:
     )
 
     assert response.status_code == 422
-
-
-def test_analyze_sentiment_with_dependency_override() -> None:
-    app.dependency_overrides[get_sentiment_service] = override_sentiment_service
-
-    try:
-        response = client.post(
-            "/api/v1/sentiment/analyze",
-            json={"text": "This text should use the fake service."},
-        )
-
-        assert response.status_code == 200
-        assert response.json() == {
-            "label": "positive",
-            "score": 0.99,
-        }
-    finally:
-        app.dependency_overrides.clear()
