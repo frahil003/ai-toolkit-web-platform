@@ -10,16 +10,20 @@ vereint.
 
 Das Projekt ist bereits initial aufgesetzt mit:
 
--   FastAPI Backend
--   sauberer Projektstruktur (api / services / models / schemas / core)
--   funktionierender App (`main.py`, Router, Health-Endpoints)
--   Konfigurationsmanagement über `.env` und `pydantic-settings`
+- FastAPI Backend
+- sauberer Projektstruktur (api / services / models / schemas / core)
+- funktionierender App (`main.py`, Router, Health-Endpoints)
+- Konfigurationsmanagement über `.env` und `pydantic-settings`
+
+Den aktuellen Projekt-Code habe ich dir auf GitHub bereitgestellt:
+
+- Link: https://github.com/frahil003/ai-toolkit-web-platform
 
 Jetzt möchte ich das **erste echte Feature** implementieren:
 
 👉 **Sentiment Analysis als vollständiger vertikaler Slice**
 
-------------------------------------------------------------------------
+---
 
 ## Ziel
 
@@ -31,7 +35,7 @@ Request\
 → Model Layer\
 → Response
 
-------------------------------------------------------------------------
+---
 
 ## Anforderungen
 
@@ -43,7 +47,7 @@ POST `/api/v1/sentiment/analyze`
 
 Request Body:
 
-``` json
+```json
 {
   "text": "I love this product!"
 }
@@ -51,25 +55,25 @@ Request Body:
 
 Response:
 
-``` json
+```json
 {
   "label": "positive",
   "score": 0.98
 }
 ```
 
-------------------------------------------------------------------------
+---
 
 ### 2. Architektur einhalten
 
 Nutze strikt folgende Trennung:
 
--   `api/v1/sentiment.py` → nur HTTP Layer
--   `schemas/sentiment.py` → Request/Response Modelle
--   `services/sentiment_service.py` → Business Logic
--   `models/sentiment_model.py` → Modellzugriff / Inference
+- `api/v1/sentiment.py` → nur HTTP Layer
+- `schemas/sentiment.py` → Request/Response Modelle
+- `services/sentiment_service.py` → Business Logic
+- `models/sentiment_model.py` → Modellzugriff / Inference
 
-------------------------------------------------------------------------
+---
 
 ### 3. Implementierungsstrategie
 
@@ -81,37 +85,37 @@ Schrittweise vorgehen:
 4.  Model Layer zunächst als **Mock implementieren**
 5.  danach optional echtes Modell (z. B. HuggingFace)
 
-------------------------------------------------------------------------
+---
 
 ### 4. Code-Qualität
 
 Achte auf:
 
--   PEP8
--   klare Typannotationen
--   saubere Funktionssignaturen
--   keine Business-Logik im API Layer
--   kein direkter Modellzugriff im Endpoint
+- PEP8
+- klare Typannotationen
+- saubere Funktionssignaturen
+- keine Business-Logik im API Layer
+- kein direkter Modellzugriff im Endpoint
 
-------------------------------------------------------------------------
+---
 
 ### 5. Best Practices
 
--   Logging vorbereiten (noch nicht voll ausbauen)
--   Fehlerfälle berücksichtigen (z. B. leerer Text)
--   klare, kleine Funktionen
--   gut lesbarer Code
+- Logging vorbereiten (noch nicht voll ausbauen)
+- Fehlerfälle berücksichtigen (z. B. leerer Text)
+- klare, kleine Funktionen
+- gut lesbarer Code
 
-------------------------------------------------------------------------
+---
 
 ## Wichtig
 
--   Arbeite Schritt für Schritt
--   Gib mir **konkreten Code**, nicht nur Erklärungen
--   Erkläre nur so viel wie nötig
--   Denke wie ein Tech Lead
+- Arbeite Schritt für Schritt
+- Gib mir **konkreten Code**, nicht nur Erklärungen
+- Erkläre nur so viel wie nötig
+- Denke wie ein Tech Lead
 
-------------------------------------------------------------------------
+---
 
 ## Start
 
