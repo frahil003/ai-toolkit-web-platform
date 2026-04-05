@@ -1,6 +1,5 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
-from app.api.dependencies import get_sentiment_service
 from app.schemas.sentiment import (
     SentimentAnalysisRequest,
     SentimentAnalysisResponse,
@@ -8,6 +7,7 @@ from app.schemas.sentiment import (
 from app.services.sentiment_service import SentimentService
 
 router = APIRouter()
+sentiment_service = SentimentService()
 
 
 @router.get("/ping", tags=["sentiment"])
@@ -22,6 +22,5 @@ def sentiment_ping() -> dict[str, str]:
 )
 def analyze_sentiment(
     request: SentimentAnalysisRequest,
-    sentiment_service: SentimentService = Depends(get_sentiment_service),
 ) -> SentimentAnalysisResponse:
     return sentiment_service.analyze(request)
